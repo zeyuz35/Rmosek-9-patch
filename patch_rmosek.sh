@@ -4,10 +4,24 @@
 
 set -e
 
-# Check if the original tarball exists
-if [ ! -f "Rmosek_9.3.2.tar.gz" ]; then
-    echo "Error: Rmosek_9.3.2.tar.gz not found in current directory"
-    exit 1
+# Download link
+DOWNLOAD_URL="https://download.mosek.com/R/9.3/src/contrib/Rmosek_9.3.2.tar.gz"
+TARBALL="Rmosek_9.3.2.tar.gz"
+
+# Check if the original tarball exists, download if not
+if [ ! -f "$TARBALL" ]; then
+    echo "Tarball not found. Downloading from $DOWNLOAD_URL..."
+    if command -v wget &> /dev/null; then
+        wget -O "$TARBALL" "$DOWNLOAD_URL"
+    elif command -v curl &> /dev/null; then
+        curl -L -o "$TARBALL" "$DOWNLOAD_URL"
+    else
+        echo "Error: Neither wget nor curl found. Please install one of them or download manually."
+        exit 1
+    fi
+    echo "Download complete."
+else
+    echo "Using existing $TARBALL"
 fi
 
 # Create a temporary directory for extraction

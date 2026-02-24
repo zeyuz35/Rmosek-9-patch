@@ -6,3 +6,6 @@ Rmosek_9.3.2-1/
 
 # Output
 *.html
+
+# Workspaces
+*.code-workspace
