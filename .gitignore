@@ -1,0 +1,11 @@
+# compiled tarballs
+*.tar.gz
+
+Rmosek_9.3.2/
+Rmosek_9.3.2-1/
+
+# Output
+*.html
+
+# Workspaces
+*.code-workspace
