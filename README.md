@@ -1,9 +1,3 @@
----
-format:
-  html:
-    embed-resources: true
----
-
 # Patch for Rmosek 9.3.2
 
 Older versions of the `Rmosek` package may not be compatible with the latest changes in the `Matrix` package (>= 1.6-2) and newer MOSEK 9 C APIs.
