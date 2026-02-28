@@ -6,19 +6,32 @@ format:
 
 # Patch for Rmosek 9.3.2
 
-Older version of the `Rmosek` package may not be compatible with the latest changes in the `Matrix` package. 
-This patch updates the package to ensure compatibility by modifying the C++ code to use function pointers for better integration with the `Matrix` package.
+Older versions of the `Rmosek` package may not be compatible with the latest changes in the `Matrix` package (>= 1.6-2) and newer MOSEK 9 C APIs.
+This patch updates the package to ensure compatibility.
 
-Instructions:
+## High-Level Overview of Changes
 
-1. Download the original `Rmosek_9.3.2.tar.gz` file from
+The included `patch_rmosek.sh` script applies the following fixes:
 
-https://download.mosek.com/R/9.3/src/contrib/Rmosek_9.3.2.tar.gz
+1. **Version Bump:** Updates the package version in `DESCRIPTION` from `9.3.2` to `9.3.2-1`.
+2. **Modernize Matrix Coercions:** Updates `R/toCSCMatrix.R` to use modern `Matrix` coercion paths and adds a new `toSTMatrix()` function.
+3. **Replace Deprecated Matrix Functions:** Replaces removed `Matrix_isclass_Csparse()` and `Matrix_isclass_triplet()` in `src/rmsk_obj_matrices.cc` with `R_check_class_etc`.
+4. **Fix MOSEK API Function Signatures:** Updates `MSK_getacolslice()` and `MSK_getqobj()` by removing the obsolete `surp[]` argument.
+5. **Fix Format Strings:** Fixes `Rf_error()`, `Rprintf()`, and `REprintf()` format strings in C++ sources to prevent potential format string vulnerabilities.
+6. **Replace Removed Constants:** Replaces the removed `MSK_IPAR_WRITE_DATA_PARAM` constant with `MSK_IPAR_PTF_WRITE_PARAMETERS` in `src/rmsk_utils_interface.cc`.
 
-2. Download the patch, and place it in the same folder at the tarball. 
+## Instructions
 
-3. Apply the patch by running the `patch` command in the terminal:
+1. Download the original `Rmosek_9.3.2.tar.gz` file from MOSEK:
+
+   https://download.mosek.com/R/9.3/src/contrib/Rmosek_9.3.2.tar.gz
+
+2. Download the patch script (`patch_rmosek.sh`), and place it in the same folder as the tarball.
+
+3. Apply the patch by running the bash script in the terminal:
 
 ```bash
-patch -p1 < /path/to/patch_rmosek.sh
+bash patch_rmosek.sh
 ```
+
+4. The script will produce a patched tarball named `Rmosek_9.3.2-1.tar.gz` which you can then install.
