@@ -33,6 +33,15 @@ fi
 WORK_DIR="$(mktemp -d)"
 trap 'rm -rf "$WORK_DIR"' EXIT
 
+EXPECTED_CHECKSUM="00d6347faf8eeb958ae40b4553a91748e49eb5290f5e2a2c6baf2a109bff8354"
+ACTUAL_CHECKSUM=$(sha256sum "$SRC_TARBALL" | awk '{print $1}')
+if [ "$ACTUAL_CHECKSUM" != "$EXPECTED_CHECKSUM" ]; then
+  echo "ERROR: Checksum mismatch for $SRC_TARBALL" >&2
+  echo "Expected: $EXPECTED_CHECKSUM" >&2
+  echo "Actual:   $ACTUAL_CHECKSUM" >&2
+  exit 1
+fi
+
 echo "==> Extracting $SRC_TARBALL ..."
 tar xzf "$SRC_TARBALL" -C "$WORK_DIR"
 
