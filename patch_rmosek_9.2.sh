@@ -74,9 +74,8 @@ rm -f "$WORK_DIR/Rmosek/DESCRIPTION.bak"
 # ---------------------------------------------------------------------------
 echo "==> Applying source patch ..."
 patch -p1 -d "$WORK_DIR/Rmosek" --no-backup-if-mismatch << 'PATCH_EOF'
-diff -ruN --strip-trailing-cr --ex v92/Rmosek/R/toCSCMatrix.R rmosek92/Rmosek/R/toCSCMatrix.R
 --- a/R/toCSCMatrix.R	2021-07-16 18:53:41
-+++ b/R/toCSCMatrix.R	2026-03-07 14:07:08
++++ b/R/toCSCMatrix.R	2026-03-07 15:06:22
 @@ -7,7 +7,7 @@
      # No coercion
    }
@@ -130,9 +129,8 @@ diff -ruN --strip-trailing-cr --ex v92/Rmosek/R/toCSCMatrix.R rmosek92/Rmosek/R/
    }
  
    return(obj)
-diff -ruN --strip-trailing-cr --ex v92/Rmosek/src/rmsk_msg_base.cc rmosek92/Rmosek/src/rmsk_msg_base.cc
 --- a/src/rmsk_msg_base.cc	2021-07-16 18:53:41
-+++ b/src/rmsk_msg_base.cc	2026-03-07 14:07:08
++++ b/src/rmsk_msg_base.cc	2026-03-07 15:06:01
 @@ -31,9 +31,9 @@
  #endif
    {
@@ -145,10 +143,9 @@ diff -ruN --strip-trailing-cr --ex v92/Rmosek/src/rmsk_msg_base.cc rmosek92/Rmos
    }
  }
  
-diff -ruN --strip-trailing-cr --ex v92/Rmosek/src/rmsk_obj_matrices.cc rmosek92/Rmosek/src/rmsk_obj_matrices.cc
 --- a/src/rmsk_obj_matrices.cc	2021-07-16 18:53:41
-+++ b/src/rmsk_obj_matrices.cc	2026-03-07 14:07:08
-@@ -5,6 +5,19 @@
++++ b/src/rmsk_obj_matrices.cc	2026-03-07 15:05:11
+@@ -5,6 +5,20 @@
  #include "rmsk_obj_mosek.h"
  
  
@@ -165,10 +162,11 @@ diff -ruN --strip-trailing-cr --ex v92/Rmosek/src/rmsk_obj_matrices.cc rmosek92/
 +}
 +// ###################################################
 +
++
  ___RMSK_INNER_NS_START___
  using std::string;
  
-@@ -48,7 +61,7 @@
+@@ -48,7 +62,7 @@
    {
  
      // Read a column compressed sparse matrix using package Matrix
@@ -177,7 +175,7 @@ diff -ruN --strip-trailing-cr --ex v92/Rmosek/src/rmsk_obj_matrices.cc rmosek92/
        initialized = true;
        matrixhandle.protect( val );
  
-@@ -59,7 +72,7 @@
+@@ -59,7 +73,7 @@
        _nnz = numeric_cast<int>( Rf_length(GET_SLOT(matrixhandle, Matrix_xSym)) );
      }
      else {
@@ -186,9 +184,8 @@ diff -ruN --strip-trailing-cr --ex v92/Rmosek/src/rmsk_obj_matrices.cc rmosek92/
      }
    }
  }
-diff -ruN --strip-trailing-cr --ex v92/Rmosek/src/rmsk_obj_mosek.cc rmosek92/Rmosek/src/rmsk_obj_mosek.cc
 --- a/src/rmsk_obj_mosek.cc	2021-07-16 18:53:41
-+++ b/src/rmsk_obj_mosek.cc	2026-03-07 14:07:08
++++ b/src/rmsk_obj_mosek.cc	2026-03-07 15:06:10
 @@ -28,7 +28,7 @@
    MSKint32t major, minor, revision;
    MSK_getversion(&major, &minor, &revision);
@@ -198,7 +195,10 @@ diff -ruN --strip-trailing-cr --ex v92/Rmosek/src/rmsk_obj_mosek.cc rmosek92/Rmo
              "A fatal error in MOSEK may have caused memory corruption!\n"
              "We strongly recommend you to save your data and restart the R session immediately.\n"
              "  VERSION: " + tostring(major) + "." +  tostring(minor) + "." + tostring(revision) + "\n"
+
+patch -p1 -d "$WORK_DIR/Rmosek" --no-backup-if-mismatch << 'PATCH_EOF'
 PATCH_EOF
+# ...existing code...
 
 # ---------------------------------------------------------------------------
 # Build
