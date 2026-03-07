@@ -9,3 +9,5 @@ Rmosek_9.3.2-1/
 
 # Workspaces
 *.code-workspace
+
+tmp/
