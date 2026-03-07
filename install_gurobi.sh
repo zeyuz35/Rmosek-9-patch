@@ -24,7 +24,7 @@ tar -xzf gurobi13.0.0_R.tar.gz
 echo "Building and installing gurobi package..."
 cd gurobiR/gurobi
 R CMD build .
-R CMD INSTALL gurobi_13.0.0.tar.gz
+R CMD INSTALL gurobi_13.0-0.tar.gz
 
 echo "Successfully installed gurobi R package."
 
