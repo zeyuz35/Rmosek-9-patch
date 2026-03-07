@@ -1,9 +1,6 @@
 # compiled tarballs
 *.tar.gz
 
-Rmosek_9.3.2/
-Rmosek_9.3.2-1/
-
 # Output
 *.html
 
@@ -11,3 +8,7 @@ Rmosek_9.3.2-1/
 *.code-workspace
 
 tmp/
+
+LLM/
+
+*.DS_Store
